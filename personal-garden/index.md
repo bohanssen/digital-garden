@@ -16,3 +16,5 @@ through my thought garden and discover new connections.
 > at [bohanssen.com](https://bohanssen.com).
 >
 > *2024-11-23*
+
+[[Test Note]]
