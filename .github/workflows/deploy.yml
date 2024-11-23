@@ -1,32 +1,45 @@
-name: Deploy Quartz to GitHub Pages
+name: Deploy Quartz site to GitHub Pages
 
 on:
   push:
     branches:
-      - v4 # Of een andere branch waar je wijzigingen pusht
+      - v4
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
-  build-deploy:
-    runs-on: ubuntu-latest
-
+  build:
+    runs-on: ubuntu-22.04
     steps:
-      # Stap 1: Checkout de repository
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      # Stap 2: Installeer Hugo
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2
+      - uses: actions/checkout@v4
         with:
-          hugo-version: 'latest' # Installeert de nieuwste versie van Hugo
+          fetch-depth: 0 # Fetch all history for git info
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Dependencies
+        run: npm ci
+      - name: Build Quartz
+        run: npx quartz build
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
 
-      # Stap 3: Bouw de website
-      - name: Build Site
-        run: hugo --minify
-
-      # Stap 4: Deploy naar GitHub Pages
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
+        id: deployment
+        uses: actions/deploy-pages@v4
