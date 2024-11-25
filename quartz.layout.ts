@@ -12,7 +12,7 @@ export const sharedPageComponents: SharedLayout = {
            repo: 'bohanssen/digital-garden',
            repoId: 'R_kgDONTxTWA',
            category: 'Announcements',
-           categoryId: 'DIC_kwDONTxTWM4CkmR1'
+           categoryId: 'DIC_kwDONTxTWM4CkmR1',
          }
        }),
      ],

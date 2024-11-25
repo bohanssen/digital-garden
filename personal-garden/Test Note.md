@@ -1,3 +1,6 @@
+---
+comments: true
+---
 # Hello world!
 
 ## Test 123

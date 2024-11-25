@@ -1,5 +1,6 @@
 ---
 title: Welcome to my digital garden
+comments: false
 ---
 
 Hi! I’m Bo Hanssen, a technology-agnostic developer since 2015 and currently working as a solution architect at APG.
